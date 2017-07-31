@@ -1,0 +1,71 @@
+---
+- hosts: localhost
+  become: yes
+  pre_tasks:
+    # Verify that the oob-mgmt-server is the Cumulus Telemetry server
+    # Cumulus/ts is a Vx image, not Ubuntu like normal
+    - name: Verify Minimum Software Version
+      assert:
+        that: "{{ansible_lsb.release | version_compare('3.0', '>=') }}"
+        msg: "Cumulus Linux version must be 3.0 or later. Version {{ansible_lsb.release}} detected"
+  tasks:
+    - name: Install Netq Apps
+      apt:
+        name: netq-apps
+        update_cache: yes
+      notify: restart netq
+
+    # This could be done idempotently with a blockinfile on /etc/netq/netq.conf
+    - name: Configure Netq Backend
+      command: netq add server 127.0.0.1
+
+  handlers:
+    - name: restart netq
+      service:
+        name: netqd
+        state: restarted
+
+- hosts: servers
+  become: yes
+  tasks:
+    - name: Add Cumulus Apt Key
+      apt_key:
+        url: "https://hostapps3.cumulusnetworks.com/setup/cumulus-host-ubuntu.pubkey"
+        state: present
+
+    - name: Add Cumulus Repo
+      apt_repository:
+        repo: deb https://hostapps3.cumulusnetworks.com/host/ubuntu xenial universe
+        state: present
+
+- hosts: network,servers
+  become: yes
+  tasks:
+    - name: Install cumulus-netq
+      apt:
+        name: cumulus-netq
+        update_cache: yes
+      register: install-netq
+
+    - name: Restart Rsyslog
+      service:
+        name: rsyslog
+        state: restarted
+
+    - name: Start NetQ Service on Servers
+      service:
+        name: netqd
+        enabled: yes
+        state: started
+      when: "'servers' in group_names"
+
+    - name: Add netq server IP
+      command: netq add server 192.168.0.254
+
+    - name: Start Netq Service Again
+      command: netq agent restart
+
+    - name: Check that the agent is running
+      command: netq agent status
+      register: status
+      failed_when: "'Stopped.' in status.stdout"
