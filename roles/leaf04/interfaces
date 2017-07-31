@@ -104,6 +104,9 @@ iface vni13
   vxlan-id 13
   vxlan-local-tunnelip 10.1.1.4
   bridge-access 13
+  bridge-learning off
+  mstpctl-bpduguard yes
+  mstpctl-portbpdufilter yes
 
 #VxLAN Tunnel for Server2-Server4 (Vlan 24)
 auto vni24
@@ -111,3 +114,6 @@ iface vni24
   vxlan-id 24
   vxlan-local-tunnelip 10.1.1.4
   bridge-access 24
+  bridge-learning off
+  mstpctl-bpduguard yes
+  mstpctl-portbpdufilter yes
