@@ -4,6 +4,7 @@
 
 auto lo
 iface lo inet loopback
+  address 8.8.8.8/32
 
 auto eth0
 iface eth0
