@@ -8,9 +8,13 @@ iface eth0
 
 auto swp1
 iface swp1
+  # This is required for Vagrant only
+  post-up ip link set swp1 promisc on
 
 auto swp2
 iface swp2
+  # This is required for Vagrant only
+  post-up ip link set swp1 promisc on
 
 auto bridge
 iface bridge
