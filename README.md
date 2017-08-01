@@ -2,7 +2,7 @@
 
 This demonstrates using BGP-eVPN for VxLAN with an external router (`internet`)
 
-![Physical Topology](https://github.com/plumbis/cldemo-vxlan/raw/master/physical_topology.png)
+![Physical Topology](https://github.com/plumbis/evpn-example/raw/master/physical_topology.png)
 
 In this demo, two different VLANs are used: Vlan 13 between server01 and server03 and Vlan 24 between server02 and server04.
 
@@ -41,6 +41,6 @@ Once the reference topology is running in Virtualbox or KVM, you can run this sp
 * `ansible-playbook main.yml`
 
 The logical topology of what will be configured:
-![Logical Topology](https://github.com/plumbis/cldemo-vxlan/raw/master/logical_topology.png)
+![Logical Topology](https://github.com/plumbis/evpn-example/raw/master/logical_topology.png)
 
 
