@@ -2,7 +2,7 @@
 
 This demonstrates using BGP-eVPN for VxLAN with an external router (`internet`)
 
-![Reference Topology Diagram](https://github.com/CumulusNetworks/cldemo-vagrant/raw/master/cldemo_topology.png)
+![Physical Topology](https://github.com/plumbis/cldemo-vxlan/raw/master/physical_topology.png)
 
 In this demo, two different VLANs are used: Vlan 13 between server01 and server03 and Vlan 24 between server02 and server04.
 
