@@ -38,7 +38,7 @@ net add bgp autonomous-system 65501
 net add bgp neighbor swp51 interface remote-as external
 net add bgp neighbor swp52 interface remote-as external
 net add bgp network 10.1.1.1/32
-net add bgp network 10.10.10.1/23
+net add bgp network 10.10.10.1/32
 net add bgp evpn neighbor swp51 act
 net add bgp evpn neighbor swp52 act
 net add bgp evpn advertise-all-vni
